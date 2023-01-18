@@ -1,4 +1,4 @@
-import { type CEP } from './types'
+import { type CEP } from './types.server'
 
 const CEP_URI = '/cep/v1'
 const CEP_URL = `${process.env.BRASIL_API_BASE_URL}${CEP_URI}`

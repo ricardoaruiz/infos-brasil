@@ -17,8 +17,8 @@ import {
   TableRow,
   Text,
 } from '~/components'
-import { getBanks } from '~/models/banks'
-import type { Bank } from '~/models/banks/types'
+import { getBanks } from '~/domains/banks/banks.server'
+import type { Bank } from '~/domains/banks/types.server'
 
 type LoaderType = {
   search: string | null

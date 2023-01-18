@@ -1,4 +1,4 @@
-import type { Bank } from './types'
+import type { Bank } from './types.server'
 
 const BANK = '/banks/v1'
 const BANK_URL = `${process.env.BRASIL_API_BASE_URL}${BANK}`

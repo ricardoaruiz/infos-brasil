@@ -10,8 +10,8 @@ import {
   TableRow,
   Text,
 } from '~/components'
-import { getBank } from '~/models/banks'
-import { type Bank } from '~/models/banks/types'
+import { getBank } from '~/domains/banks/banks.server'
+import { type Bank } from '~/domains/banks/types.server'
 
 export const loader = async ({ params }: LoaderArgs) => {
   const { code } = params

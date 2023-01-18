@@ -17,8 +17,8 @@ import {
   TableRow,
   Text,
 } from '~/components'
-import { getCEP } from '~/models/cep'
-import type { CEP } from '~/models/cep/types'
+import { getCEP } from '~/domains/cep/cep.server'
+import type { CEP } from '~/domains/cep/types.server'
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData()
