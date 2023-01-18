@@ -1,23 +1,38 @@
 import cx from 'classnames'
 import type { ComponentProps } from 'react'
 
-type TableProps = ComponentProps<'table'>
+type TableProps = ComponentProps<'table'> & {
+  fixedHeader?: boolean
+  heightOffset?: number
+}
 
-export const Table = ({ children, className, ...props }: TableProps) => {
+export const Table = ({
+  children,
+  fixedHeader = false,
+  heightOffset = 0,
+  className,
+  ...props
+}: TableProps) => {
   return (
-    <table
+    <div
       className={cx(
-        `
-          border-collapse
-          border-spacing-0
-          table-auto
-          w-full
-        `,
-        className
+        fixedHeader && `overflow-y-auto max-h-[calc(100vh-${heightOffset}px)]`
       )}
-      {...props}
     >
-      {children}
-    </table>
+      <table
+        className={cx(
+          `
+            border-collapse
+            border-spacing-0
+            table-fixed
+            w-full
+          `,
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </table>
+    </div>
   )
 }

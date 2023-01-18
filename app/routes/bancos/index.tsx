@@ -92,18 +92,20 @@ export default function BanksIndex() {
 
       {!!banks.length && (
         <>
-          <Text>Lista completa de Bancos</Text>
+          <Text as="h2" className="text-center text-2xl font-bold">
+            Lista completa de Bancos
+          </Text>
 
-          <Table>
+          <Table fixedHeader heightOffset={300}>
             <thead>
-              <TableRow>
+              <TableRow isFixed>
                 <TableHeaderCell>Código</TableHeaderCell>
                 <TableHeaderCell>Nome</TableHeaderCell>
                 <TableHeaderCell>Nome completo</TableHeaderCell>
               </TableRow>
             </thead>
 
-            <tbody className="bg-grey-light overflow-y-scroll h-10">
+            <tbody>
               {banks.map(({ name, fullName, code, ispb }) => (
                 <TableRow
                   key={code}

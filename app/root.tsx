@@ -37,7 +37,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="grid grid-cols-[300px_minmax(900px,_1fr)] h-screen">
+        <div className="grid grid-cols-[300px_minmax(900px,_1fr)] h-screen overflow-hidden">
           <div className="bg-red-100 p-4 shadow-[2px_4px_6px_rgba(0,0,0,0.3)]">
             <AppMenu title="Infos Brasil" />
           </div>
