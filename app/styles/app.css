@@ -553,12 +553,12 @@ html {
   margin-top: 1.25rem;
 }
 
-.mt-1{
-  margin-top: 0.25rem;
-}
-
 .mb-4{
   margin-bottom: 1rem;
+}
+
+.mt-1{
+  margin-top: 0.25rem;
 }
 
 .inline-block{

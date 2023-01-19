@@ -50,7 +50,8 @@ const getBanksData = (banks: Bank[], search: string | null): Bank[] => {
  */
 export const loader = async ({ request }: LoaderArgs): Promise<LoaderType> => {
   const url = new URL(request.url)
-  const search = url.searchParams.get('search')
+  const searchParam = url.searchParams.get('search')
+  const search = searchParam ? decodeURI(searchParam) : ''
   const banks = await getBanks()
   return { banks: getBanksData(banks, search), search }
 }
@@ -62,7 +63,8 @@ export const loader = async ({ request }: LoaderArgs): Promise<LoaderType> => {
  */
 export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData()
-  const search = formData.get('search')
+  const searchField = formData.get('search')
+  const search = searchField ? encodeURI(searchField.toString()) : ''
   return redirect(`/bancos${search ? `?search=${search}` : ''}`)
 }
 
