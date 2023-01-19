@@ -15,9 +15,8 @@ export const Table = ({
 }: TableProps) => {
   return (
     <div
-      className={cx(
-        fixedHeader && `overflow-y-auto max-h-[calc(100vh-${heightOffset}px)]`
-      )}
+      className={cx(fixedHeader && `overflow-y-auto`)}
+      style={{ maxHeight: `calc(100vh - ${heightOffset}px)` }}
     >
       <table
         className={cx(

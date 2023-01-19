@@ -7,10 +7,8 @@ import { redirect } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 
 import {
-  Card,
   ErrorHandler,
   NoDataFound,
-  SimpleSearchForm,
   Table,
   TableDataCellDetailTitle,
   TableDataCellDetailValue,
@@ -20,49 +18,30 @@ import {
 import { getCEP } from '~/domains/cep/cep.server'
 import type { CEP } from '~/domains/cep/types.server'
 
+type LoaderType = {
+  data: CEP | null
+}
+
+export const loader = async ({ params }: LoaderArgs): Promise<LoaderType> => {
+  const { cep } = params
+  const data = cep ? await getCEP(cep) : null
+
+  return { data }
+}
+
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData()
   const search = form.get('search')
   return redirect(`/cep${search ? `?search=${search}` : ''}`)
 }
 
-type LoaderType = {
-  data: CEP | null
-  search?: string | null
-}
-
-export const loader = async ({ request }: LoaderArgs): Promise<LoaderType> => {
-  const url = new URL(request.url)
-  const search = url.searchParams.get('search')
-  const data = search ? await getCEP(search) : null
-
-  return { data, search }
-}
-
 const CEPIndex = () => {
   const navigate = useNavigate()
-  const { data, search } = useLoaderData<typeof loader>()
+  const { data } = useLoaderData<typeof loader>()
 
   return (
     <>
-      <Text as="h1" className="text-center text-4xl mb-2">
-        CEP
-      </Text>
-
-      <Card>
-        <Text as="h2" className="text-center text-2xl font-bold">
-          Busca
-        </Text>
-
-        <SimpleSearchForm
-          searchFieldName="search"
-          searchValue={search}
-          searchFieldMaxLength={8}
-          placeholder="Informe o CEP"
-        />
-      </Card>
-
-      {!data && search && <NoDataFound />}
+      {!data && <NoDataFound />}
 
       {data && (
         <>
