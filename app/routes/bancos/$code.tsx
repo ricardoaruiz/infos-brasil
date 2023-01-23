@@ -3,9 +3,7 @@ import { redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import { ErrorHandler, NoDataFound, Text } from '~/components'
-import type { BankTypes } from '~/features/banks'
-import { BanksApi } from '~/features/banks'
-import { BankDetail } from '~/features/banks/components/BankDetail'
+import { type BankTypes, BankDetail, BanksApi } from '~/features/banks'
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { code } = params

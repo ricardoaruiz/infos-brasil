@@ -7,9 +7,7 @@ import { redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import { ErrorHandler, Text } from '~/components'
-import type { BankTypes } from '~/features/banks'
-import { BanksApi } from '~/features/banks'
-import { BankList } from '~/features/banks/components/BankList'
+import { type BankTypes, BankList, BanksApi } from '~/features/banks'
 
 /**
  * Remove banks has no code and sort them by code

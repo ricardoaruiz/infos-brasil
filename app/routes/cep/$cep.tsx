@@ -7,9 +7,7 @@ import { redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import { ErrorHandler, NoDataFound, Text } from '~/components'
-import type { CepTypes } from '~/features/cep'
-import { CepApi } from '~/features/cep'
-import { CepDetail } from '~/features/cep'
+import { type CepTypes, CepApi, CepDetail } from '~/features/cep'
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { cep } = params

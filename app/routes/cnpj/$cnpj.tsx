@@ -2,8 +2,7 @@ import type { ErrorBoundaryComponent, LoaderFunction } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 
 import { ErrorHandler, NoDataFound, Text } from '~/components'
-import type { CnpjTypes } from '~/features/cnpj'
-import { CnpjApi, CnpjDetail } from '~/features/cnpj'
+import { type CnpjTypes, CnpjApi, CnpjDetail } from '~/features/cnpj'
 
 /**
  * Loader function
