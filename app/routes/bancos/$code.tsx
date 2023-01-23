@@ -1,76 +1,31 @@
-import type { ErrorBoundaryComponent, LoaderArgs } from '@remix-run/node'
+import type { ErrorBoundaryComponent, LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
-import {
-  ErrorHandler,
-  Table,
-  TableDataCellDetailTitle,
-  TableDataCellDetailValue,
-  TableRow,
-  Text,
-} from '~/components'
-import { getBank } from '~/domains/banks/banks.server'
-import { type Bank } from '~/domains/banks/types.server'
+import { ErrorHandler, NoDataFound, Text } from '~/components'
+import type { BankTypes } from '~/features/banks'
+import { BanksApi } from '~/features/banks'
+import { BankDetail } from '~/features/banks/components/BankDetail'
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const { code } = params
 
   if (!code || code === 'null') {
     return redirect('/bancos')
   }
 
-  const bank = await getBank(code)
+  const bankData = await BanksApi.getBank(code)
 
-  return bank
+  return bankData
 }
 
-export default function BankDetail() {
-  const navigate = useNavigate()
-  const { code, name, fullName, ispb } = useLoaderData() as Bank
+export default function () {
+  const { data } = useLoaderData<BankTypes.BankDetailNs.LoaderData>()
 
-  return (
-    <>
-      <Text as="h2" className="text-center text-2xl font-bold">
-        Banco
-      </Text>
-
-      <Table>
-        <tbody>
-          <TableRow>
-            <TableDataCellDetailTitle>Código</TableDataCellDetailTitle>
-            <TableDataCellDetailValue>{code}</TableDataCellDetailValue>
-          </TableRow>
-          <TableRow>
-            <TableDataCellDetailTitle>Nome</TableDataCellDetailTitle>
-            <TableDataCellDetailValue>{name}</TableDataCellDetailValue>
-          </TableRow>
-          <TableRow>
-            <TableDataCellDetailTitle>Nome Completo</TableDataCellDetailTitle>
-            <TableDataCellDetailValue>{fullName}</TableDataCellDetailValue>
-          </TableRow>
-          <TableRow>
-            <TableDataCellDetailTitle>ISPB</TableDataCellDetailTitle>
-            <TableDataCellDetailValue>{ispb}</TableDataCellDetailValue>
-          </TableRow>
-        </tbody>
-      </Table>
-
-      <p
-        role="link"
-        onClick={() => navigate(-1)}
-        className="
-          inline-block
-          mt-5
-          font-bold
-          hover:text-red-400
-          cursor-pointer
-        "
-      >
-        {'< '}Voltar
-      </p>
-    </>
-  )
+  if (!data) {
+    return <NoDataFound />
+  }
+  return <BankDetail data={data} />
 }
 
 /**

@@ -1,3 +1,7 @@
+import type { PropsWithChildren } from 'react'
+
+import type { ApiNs } from '~/types'
+
 export type CNPJ = {
   cnpj: string
   email: string
@@ -55,4 +59,18 @@ export type Qsa = {
   cpf_representante_legal: string
   nome_representante_legal: string
   codigo_qualificacao_representante_legal: string
+}
+
+/**
+ * CnpjDetailNs
+ */
+export namespace CnpjDetailNs {
+  export type CnpjDetailProps = PropsWithChildren & {
+    data: CNPJ | null | undefined
+  }
+
+  export type LoaderData = {
+    data: CNPJ | null | undefined
+    error: ApiNs.ResponseError | null | undefined
+  }
 }

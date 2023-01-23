@@ -1,29 +1,15 @@
 import type {
-  ActionArgs,
+  ActionFunction,
   ErrorBoundaryComponent,
-  LoaderArgs,
+  LoaderFunction,
 } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
-import {
-  Card,
-  ErrorHandler,
-  NoDataFound,
-  SimpleSearchForm,
-  Table,
-  TableDataCel,
-  TableHeaderCell,
-  TableRow,
-  Text,
-} from '~/components'
-import { getBanks } from '~/domains/banks/banks.server'
-import type { Bank } from '~/domains/banks/types.server'
-
-type LoaderType = {
-  search: string | null
-  banks: Bank[]
-}
+import { ErrorHandler, Text } from '~/components'
+import type { BankTypes } from '~/features/banks'
+import { BanksApi } from '~/features/banks'
+import { BankList } from '~/features/banks/components/BankList'
 
 /**
  * Remove banks has no code and sort them by code
@@ -31,7 +17,12 @@ type LoaderType = {
  * @param search
  * @returns list of banks
  */
-const getBanksData = (banks: Bank[], search: string | null): Bank[] => {
+const getBanksData = (
+  banks: BankTypes.Bank[] | null,
+  search: string | null
+): BankTypes.Bank[] => {
+  if (!banks) return []
+
   const banksData = search
     ? banks.filter((bank) =>
         bank.name
@@ -48,12 +39,16 @@ const getBanksData = (banks: Bank[], search: string | null): Bank[] => {
  * @param request
  * @returns list of banks and search term
  */
-export const loader = async ({ request }: LoaderArgs): Promise<LoaderType> => {
+export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url)
   const searchParam = url.searchParams.get('search')
   const search = searchParam ? decodeURI(searchParam) : ''
-  const banks = await getBanks()
-  return { banks: getBanksData(banks, search), search }
+  const banksData = await BanksApi.getBanks()
+  return {
+    search,
+    data: getBanksData(banksData.data, search),
+    error: banksData.error,
+  }
 }
 
 /**
@@ -61,7 +56,7 @@ export const loader = async ({ request }: LoaderArgs): Promise<LoaderType> => {
  * @param request
  * @returns
  */
-export const action = async ({ request }: ActionArgs) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const searchField = formData.get('search')
   const search = searchField ? encodeURI(searchField.toString()) : ''
@@ -72,59 +67,10 @@ export const action = async ({ request }: ActionArgs) => {
  * Index component
  * @returns component
  */
-export default function BanksIndex() {
-  const navigate = useNavigate()
-  const { banks, search } = useLoaderData<typeof loader>()
+export default function () {
+  const { data, search } = useLoaderData<BankTypes.BankListNs.LoaderData>()
 
-  return (
-    <>
-      <Card>
-        <Text as="h2" className="text-center text-2xl font-bold">
-          Filtro
-        </Text>
-
-        <SimpleSearchForm
-          searchFieldName="search"
-          searchValue={search}
-          placeholder="Informe o banco que deseja encontrar"
-        />
-      </Card>
-
-      {!banks.length && <NoDataFound />}
-
-      {!!banks.length && (
-        <>
-          <Text as="h2" className="text-center text-2xl font-bold">
-            Lista completa de Bancos
-          </Text>
-
-          <Table fixedHeader heightOffset={300}>
-            <thead>
-              <TableRow isFixed>
-                <TableHeaderCell>Código</TableHeaderCell>
-                <TableHeaderCell>Nome</TableHeaderCell>
-                <TableHeaderCell>Nome completo</TableHeaderCell>
-              </TableRow>
-            </thead>
-
-            <tbody>
-              {banks.map(({ name, fullName, code, ispb }) => (
-                <TableRow
-                  key={code}
-                  onClick={() => navigate(`/bancos/${code}`)}
-                  isHoverEffect
-                >
-                  <TableDataCel>{code}</TableDataCel>
-                  <TableDataCel>{name}</TableDataCel>
-                  <TableDataCel>{fullName}</TableDataCel>
-                </TableRow>
-              ))}
-            </tbody>
-          </Table>
-        </>
-      )}
-    </>
-  )
+  return <BankList search={search} data={data} />
 }
 
 /**

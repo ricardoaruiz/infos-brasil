@@ -14,7 +14,7 @@ import {
 import { AppMenu } from './components/AppMenu'
 import { NotFound } from './components/NotFound'
 
-import styles from './styles/app.css'
+import styles from './app.css'
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
