@@ -19,6 +19,7 @@ export const MenuItem = styled(NavLink, {
   '&.active': {
     backgroundColor: '$red400',
     boxShadow: '$lg',
+    color: '$slate100',
   },
   '&.pending': {
     true: {
