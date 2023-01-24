@@ -13,6 +13,7 @@ import {
 
 import { AppMenu } from './components/AppMenu'
 import { NotFound } from './components/NotFound'
+import { getCssText } from './config/stitches.config'
 
 import styles from './app.css'
 
@@ -35,6 +36,10 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <style
+          id="stitches"
+          dangerouslySetInnerHTML={{ __html: getCssText() }}
+        />
       </head>
       <body>
         <div className="grid grid-cols-[300px_minmax(900px,_1fr)] h-screen overflow-hidden">

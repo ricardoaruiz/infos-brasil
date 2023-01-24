@@ -1,0 +1,71 @@
+import { createStitches } from '@stitches/react'
+
+export const {
+  styled,
+  css,
+  globalCss,
+  keyframes,
+  getCssText,
+  theme,
+  createTheme,
+  config,
+} = createStitches({
+  theme: {
+    colors: {
+      slate100: '#f1f5f9',
+      slate200: '#e2e8f0',
+      slate300: '#cbd5e1',
+      slate400: '#94a3b8',
+      slate900: '#0f172a',
+
+      red200: '#fecaca',
+      red300: '#fca5a5',
+      red400: '#f87171',
+      red900: '#7f1d1d',
+    },
+    fontSizes: {
+      xs: '0.75rem',
+      sm: '0.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+      '2xl': '1.5rem',
+      '3xl': '1.875rem',
+      '4xl': '2.25rem',
+      '5xl': '3rem',
+      '6xl': '3.75rem',
+      '7xl': '4.5rem',
+      '8xl': '6rem',
+      '9xl': '8rem',
+    },
+    fontWeights: {
+      thin: 100,
+      extralight: 200,
+      light: 300,
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+      extrabold: 800,
+      black: 900,
+    },
+    radii: {
+      none: '0px',
+      sm: '2px',
+      rounded: '4px',
+      md: '6px',
+      lg: '8px',
+      xl: '12px',
+      full: '9999px',
+    },
+    shadows: {
+      sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+      shadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+      md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+      lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+    },
+  },
+  media: {
+    bp1: '(min-width: 480px)',
+  },
+})

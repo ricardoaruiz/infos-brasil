@@ -1,4 +1,5 @@
 import { AppMenuItem } from './components/AppMenuItem'
+import * as S from './styles'
 
 type MenuProps = {
   title?: string
@@ -7,7 +8,7 @@ type MenuProps = {
 export const AppMenu = ({ title }: MenuProps) => {
   return (
     <>
-      {title && <p className="text-2xl font-bold text-center">{title}</p>}
+      {title && <S.MenuTitle>{title}</S.MenuTitle>}
       <ul>
         <AppMenuItem to="/bancos">Bancos</AppMenuItem>
         <AppMenuItem to="/cep">CEP</AppMenuItem>
